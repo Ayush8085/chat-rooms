@@ -11,7 +11,7 @@
 
 ## Create Room
 
-<img src="screenshots/create-room.png" />
+<img src="screenshots/create_room.png" />
 
 ## Rooms Page
 
