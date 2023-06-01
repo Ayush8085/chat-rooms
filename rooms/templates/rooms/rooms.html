@@ -4,15 +4,20 @@
 
 <h1>Rooms</h1>
 
-{% for room in rooms %}
-<div class="card" style="width: 10rem;">
-    <div class="card-body">
-      <h5 class="card-title">{{room.name}}</h5>
-      <a href="{% url 'room' room.id %}" class="btn btn-primary">Join</a>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+  {% for room in rooms %}
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{room.name}}</h5>
+        <a href="{% url 'room' room.id %}" class="btn btn-primary">Join</a>
+      </div>
     </div>
   </div>
-  <br>
-{% endfor %}
+  {% endfor %}
 
+</div>
 
 {% endblock content %}

@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>Create Room</h1>
+
+<form method="POST" action="">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <input type="text" name="roomname" class="form-control" placeholder="Enter Room Name" /><br>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Create</button>
+  <a href="{% url 'home' %}" class="btn btn-secondary">Go Back</a>
+</form>
+
+
+{% endblock content %}

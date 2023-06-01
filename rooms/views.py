@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from .models import Room, Message
@@ -19,3 +19,14 @@ def room(request, pk):
 
     context = {'room': room, 'messages': messages}
     return render(request, 'rooms/room.html', context)
+
+@login_required
+def createRoom(request):
+
+    if request.method == "POST":
+        Room.objects.create(
+            name = request.POST['roomname']
+        )
+        return redirect('rooms')
+    
+    return render(request, 'rooms/create-room.html')
