@@ -1,0 +1,93 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>{{room.name}}</h1>
+<br>
+
+<div class="card" id="room-message">
+
+  {% for message in messages %}
+  <div class="card">
+    <h5 class="card-title mx-3">{{message.user.username}}</h5>
+    <p class="mx-3">
+      {{message.content}}
+    </p>
+  </div>
+  {% endfor %}
+</div>
+
+<br>
+
+<form method="POST" action="">
+  {% csrf_token %}
+
+  <input type="text" id="input-chat" placeholder="Enter your message" />
+
+  <button type="submit" id="submit-chat" class="btn btn-primary">Send</button>
+</form>
+
+{{room.pk|json_script:"room-name"}}
+{{request.user.username|json_script:"username"}}
+
+<script>
+  const roomName = JSON.parse(document.getElementById('room-name').textContent);
+  const userName = JSON.parse(document.getElementById('username').textContent);
+
+  const chatSocket = new WebSocket(
+    'ws://' +
+    window.location.host +
+    '/ws/' +
+    roomName +
+    '/'
+  )
+
+  chatSocket.onmessage = function(e) {
+    console.log("This is onmessage");
+
+    const data = JSON.parse(e.data)
+
+    if (data.message) {
+      // const html = '<div class="card">'
+      //       html += '<h5 class="card-title mx-3">' + data.username + '</h5>'
+      //       html += '<p class="mx-3">' + data.message + '</p></div>'
+
+      // document.querySelector('#room-message').innerHTML += html;
+    }
+    else {
+      alert('Message is empty!!');
+    }
+  }
+
+  chatSocket.onclose = function(e) {
+    console.log("onclose");
+  }
+
+  //
+
+  document.querySelector('#submit-chat').onclick = function(e) {
+
+
+    const messageInputDom = document.querySelector('#input-chat');
+    const message = messageInputDom.value;
+
+    console.log({
+            'message': message,
+            'username': userName,
+            'room': roomName
+        })
+
+    chatSocket.send(JSON.stringify({
+      'message': message,
+      'username': userName,
+      'room': roomName,
+    }));
+
+    messageInputDom.value = '';
+
+
+  }
+
+</script>
+
+{% endblock content %}

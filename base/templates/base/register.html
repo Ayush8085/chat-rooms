@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>Sign Up</h1>
+
+<form method="POST" action="">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      {{form.as_p}}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Logout</button>
+    <a href="{% url 'home' %}" class="btn btn-secondary">Go Back</a>
+  </form>
+
+  {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            {{error}}
+        {% endfor %}
+    {% endfor %}
+  {% endif %}
+
+{% endblock content %}

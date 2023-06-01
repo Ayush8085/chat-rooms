@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>Login</h1>
+
+<form method="POST" action="">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <input type="text" name="username" class="form-control" placeholder="Enter Username" /><br>
+    <input type="password" name="password" class="form-control" placeholder="Enter Password" /><br>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Login</button>
+  <a href="{% url 'home' %}" class="btn btn-secondary">Go Back</a>
+</form>
+
+
+{% endblock content %}
